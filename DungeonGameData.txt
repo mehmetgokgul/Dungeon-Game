@@ -1,0 +1,57 @@
+[0,0] - The Hall
+Choose the direction you want to go. Right or down? Good luck!
+Heal Potion (+1 hp)  
+Strength Potion (+1 sp)
+
+[0,1] - The Study
+A quiet room filled with old books and scrolls. Perhaps some knowledge can be found here.
+Ancient Tome (Increases intelligence)
+
+[0,2] - The Hidden Garden
+A beautiful, unexpected garden in the middle of the dungeon. It seems to be untouched by time.
+Healing Herb (Restores health over time)  
+Flower of Strength (Temporarily increases strength)
+
+[1,0] - The Laboratory
+A cold, sterile room filled with strange concoctions and equipment. Be cautious.
+Potion of Speed (Increases movement speed temporarily)  
+Acid Flask (Deals damage when thrown)
+
+[1,1] - The Workshop
+A room full of tools and workbenches. It looks like something could be crafted here.
+Hammer (Increases attack strength)  
+Metal Rod (Crafting item for weapons)
+
+[1,2] - The Pantry
+A storage room filled with food supplies. You may find something useful here.
+Ration (Restores health)  
+Water Flask (Refills stamina)
+
+[2,0] - The Library
+Rows of ancient bookshelves line the walls. Perhaps some of these texts hold secrets.
+Book of Spells (Grants access to a new spell)  
+Scroll of Wisdom (Increases intelligence and spellcasting ability)
+
+[2,1] - The Bedroom
+A small, dusty room with a bed. It looks like it hasn’t been used for years.
+Blanket (Restores a small amount of health)  
+Pillow of Comfort (Temporarily increases health regeneration)
+
+[2,2] - The Hallway
+A long, dimly lit hallway. The air feels thick, and every step echoes loudly.
+Map Fragment (Helps navigate the dungeon)
+
+[3,0] - The Secret Chamber
+A hidden chamber filled with dark energy. You feel a strange presence here.
+Key of Shadows (Unlocks hidden rooms)  
+Dark Stone (Summons dark creatures for assistance)
+
+[3,1] - The Closet
+A small, cramped room filled with forgotten junk. It’s a tight squeeze, but something might be hidden here.
+Old Sword (A weak weapon, but better than nothing)  
+Dusty Armor (Provides basic protection)
+
+[3,2] - The Dungeon Lord's Lair
+The final room. The Dungeon Lord awaits. Prepare for your greatest battle.
+Dungeon Lord's Crown (Increases strength and magical power)  
+Sword of the Ancients (A powerful weapon for defeating the Dungeon Lord)
