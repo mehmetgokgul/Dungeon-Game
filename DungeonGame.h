@@ -21,11 +21,20 @@ struct Item {
     char info[100];
 };
 
+// Creature structure with health, strength, and description
+struct Creature {
+    int health;
+    int strength;
+    char name[50];
+    char info[100];
+};
+
 // Room structure representing each room in the dungeon
 struct Room {
     char name[50];
-    char description[200];
+    char info[200];
     struct Item items[10]; // Store up to 10 items per room
+    struct Creature creature;  // Creature in the room
 };
 
 // Matrix of rooms, a 4x3 grid

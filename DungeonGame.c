@@ -17,15 +17,15 @@ void readRoomData(const char *filename) {
 
     while (fgets(line, sizeof(line), file)) {
         if (sscanf(line, "[%d,%d] - %[^\n]", &x, &y, rooms[x][y].name) == 3) {
-            // Read description
-            fgets(rooms[x][y].description, sizeof(rooms[x][y].description), file);
-            rooms[x][y].description[strcspn(rooms[x][y].description, "\n")] = '\0';
+            // Read info
+            fgets(rooms[x][y].info, sizeof(rooms[x][y].info), file);
+            rooms[x][y].info[strcspn(rooms[x][y].info, "\n")] = '\0';
 
             // Read items
-            int item_count = 0;  // Reset item count for the current room
+            int item_count = 0;
             while (fgets(line, sizeof(line), file) && line[0] != '[') {
-                line[strcspn(line, "\n")] = '\0';  // Remove newline
-                if (strlen(line) == 0) continue;  // Skip empty lines
+                line[strcspn(line, "\n")] = '\0';  
+                if (strlen(line) == 0) continue;
 
                 // Parse items in the format "Name (Effect)"
                 char item_name[50], item_info[100];
@@ -40,13 +40,16 @@ void readRoomData(const char *filename) {
 
     fclose(file);
 
-    for (int i = 0; i < MAX_ROWS; i++) {
-        for (int j = 0; j < MAX_COLS; j++) {
+    // Print all room data for testing
+    int i, j;
+    for (i = 0; i < MAX_ROWS; i++) {
+        for (j = 0; j < MAX_COLS; j++) {
             if (rooms[i][j].name[0] == '\0') continue;  
             printf("\n--> %s\n", rooms[i][j].name);
             if (i == 0 && j == 0) printf("\n           Welcome to the Dungeon!\n");
-            printf("> %s\n", rooms[i][j].description);
+            printf("> %s\n", rooms[i][j].info);
 
+            // Print items if they exist
             if (rooms[i][j].items[0].name[0] != '\0') {
                 printf("\nNew items:\n");
                 for (int k = 0; k < 10 && rooms[i][j].items[k].name[0] != '\0'; k++) {
