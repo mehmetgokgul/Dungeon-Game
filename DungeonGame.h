@@ -5,8 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_ROWS 4
-#define MAX_COLS 3
+#define ROOMS_ROWS 4
+#define ROOMS_COLS 3
+#define CREATURES_ROWS 4
+#define CREATURES_COLS 3
 
 // Player structure holding health, strength, and inventory
 struct PlayerStats {
@@ -23,10 +25,10 @@ struct Item {
 
 // Creature structure with health, strength, and description
 struct Creature {
-    int health;
-    int strength;
     char name[50];
     char info[100];
+    int health;
+    int strength;   
 };
 
 // Room structure representing each room in the dungeon
@@ -38,13 +40,15 @@ struct Room {
 };
 
 // Matrix of rooms, a 4x3 grid
-extern struct Room rooms[MAX_ROWS][MAX_COLS];
+extern struct Room rooms[ROOMS_ROWS][ROOMS_COLS];
+extern struct Creature creatures[CREATURES_ROWS][CREATURES_COLS];
+extern struct Room currentRoom; 
 
 // Function prototypes for in-game and menu actions
-void move(int *row, int *col, const char *direction);
-void look(int row, int col);
-void inventory(struct PlayerStats *player);
-void pickup(struct PlayerStats *player, int row, int col, const char *itemName);
+void move(const char *direction);
+void look();
+void inventory();
+void pickup(const char *itemName);
 void saveGame(struct PlayerStats *player, int row, int col, const char *filepath);
 void loadGame(struct PlayerStats *player, int *row, int *col, const char *filepath);
 void exitGame();

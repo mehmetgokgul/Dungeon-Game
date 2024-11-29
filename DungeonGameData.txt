@@ -1,46 +1,87 @@
+#Rooms
+
 [0,0] - The Hall
 Choose the direction you want to go. Right or down? Good luck!
 
 [0,1] - The Piano Room
-A grand room with an old piano that fills the dungeon with eerie melodies. You played the piano beautifully, and the walls adored the melody. As a reward, you received: 
+A grand room with an old piano that fills the dungeon with eerie melodies. You played the piano beautifully and the walls adored the melody. As a reward, you received: 
 Musical Pipe (Increases health by 1 hp. Playing the pipe restores your spirit and enhances your connection to the music of the world.)
  
 [0,2] - The Hidden Garden
-A beautiful, unexpected garden in the middle of the dungeon. It seems to be untouched by time. However, the floor is scattered with broken cups, and the air is thick with the smell of coffee.
+A beautiful, unexpected garden in the middle of the dungeon. It seems untouched by time, with lush plants growing in every corner. The air feels fresh and the serenity of the garden contrasts sharply with the dungeon's eerie atmosphere.
 Old Sword (A basic weapon that increases strength by 1 sp)
 
 [1,0] - The Laboratory  
 A cold, sterile room filled with strange concoctions and equipment. Be cautious.  
 Lab Coat (+1 sp. Safety first)  
+Creature: [1,0]
 
 [1,1] - The Workshop  
 A room full of tools and workbenches. It looks like something could be crafted here.  
-Mace (+2 sp. Increases attack strength moderately)
+Mace (+2 sp. Increases attack strength moderately)  
+Creature: [1,1]
 
 [1,2] - The Prison  
 A dark, damp room with cold stone walls and rusty bars. The air is filled with the scent of mildew and despair.  
 Bone Key (Can be used to unlock a chest)  
+Creature: [1,2]
 
 [2,0] - The Library  
 The room is filled with dusty, long shelves of books. Many are old and decayed, but some may hold valuable knowledge.  
-Ancient Book (+3 sp. Knowledge is power)
+Ancient Book (+3 sp. Knowledge is power)  
+Creature: [2,0]
 
 [2,1] - The Bedroom  
 A grand, opulent room with a massive bed that seems too large for any human. The room is filled with velvet curtains and golden accents. It looks as if it hasn’t been used for centuries.  
-Golden Chest (Can be unlocked with the Bone Key)
+Golden Chest (Can be unlocked with the Bone Key)  
+Creature: [2,1]
 
 [2,2] - The Forge  
-A hot, fiery room filled with the sound of hammering metal. The walls glow with the heat of a massive forge, and armor sets hang from the walls. Sparks fly as molten metal is poured into molds. This is where the finest armors are made.  
-Armor of the Flame (+5 hp. Increases defense and provides fire resistance)
+A hot, fiery room filled with the sound of hammering metal. The walls glow with the heat of a massive forge and armor sets hang from the walls. Sparks fly as molten metal is poured into molds. This is where the finest armors are made.  
+Armor of the Flame (+5 hp. Increases defense and provides fire resistance)  
+Creature: [2,2]
 
 [3,0] - The Secret Chamber  
-A hidden chamber filled with dark energy. You feel a strange presence here. Whispers echo from every corner, footsteps race through the air, and faint voices discuss your every move. The eerie sounds of laughter and weeping fill the space. You are not alone.  
-Shadow Blade (+3 sp. A weapon forged in the shadows, it enhances attack power with dark energy.)
+A hidden chamber filled with dark energy. You feel a strange presence here. Whispers echo from every corner, footsteps race through the air and faint voices discuss your every move. The eerie sounds of laughter and weeping fill the space. You are not alone.  
+Shadow Blade (+3 sp. A weapon forged in the shadows, it enhances attack power with dark energy.)  
+Creature: [3,0]
 
 [3,1] - The Courtyard  
 A large, empty space with cold stone floors. A heavy silence fills the air, broken only by the occasional gust of wind that seems to seep in from somewhere. An unmoving figure stands at the far end of the courtyard, its eyes following your every move. As you approach, you realize the figure is a stone-like statue, eerily lifelike, its gaze unblinking.  
-Ebony Shield (+5 hp. A rare, dark shield made from ebony, known for its durability and ability to protect the wearer.)
+Ebony Shield (+5 hp. A rare, dark shield made from ebony, known for its durability and ability to protect the wearer.)  
+Creature: [3,1]
 
 [3,2] - The Dungeon Lord's Lair  
-The final room. The walls are lined with ominous, blood-stained stone, and a cold, oppressive atmosphere fills the air. At the far end, seated upon a throne made of ancient bones, sits the Dungeon Lord, eyes burning with malevolent power. The room is filled with the echoes of countless battles fought and lost. The Dungeon Lord awaits, and only the strongest will leave this chamber alive. Prepare for your greatest battle.
+The final room. The walls are lined with ominous, blood-stained stone and a cold, oppressive atmosphere fills the air. At the far end, seated upon a throne made of ancient bones, sits the Dungeon Lord, eyes burning with malevolent power. The room is filled with the echoes of countless battles fought and lost. The Dungeon Lord awaits and only the strongest will leave this chamber alive. Prepare for your greatest battle.  
+Creature: [3,2]
+
+#Creatures
+
+[0,0]:NULL
+[0,1]:NULL
+[0,2]:Blue Snake:It is attacked when you are walking in greenery:5:2;
+[1,0]:Crazy Scientist:Stays behind equipment, attacks when approached:8:3;
+[1,1]:Crafting Golem:It comes to life when you approach the workbenches:10:5;
+[1,2]:Prison Guard:Keeps watch over the prisoners and attacks intruders:7:4;
+[2,0]:Knowledge Guardian:A golem made of old books, protects valuable knowledge:12:2;
+[2,1]:Sleepy Wraith:It lingers in the shadows, attacking if disturbed:6:3;
+[2,2]:Molten Fiend:Born from the heat of the forge, it attacks with fiery breath:15:6;
+[3,0]:Shadow Specter:It moves in the darkness, hard to see but deadly when provoked:8:4;
+[3,1]:Stone Sentinel:Statue-like creature that attacks when approached too closely:20:7;
+[3,2]:Dungeon Lord:He awaits on his throne, the final challenge:50:10;
+
+#Items
+
+[0,0]:NULL
+[0,1]:Musical Pipe:Increases health by 1 hp. Playing the pipe restores your spirit and enhances your connection to the music of the world:1:0;
+[0,2]:Old Sword:A basic weapon that increases strength by 1 sp:0:1;
+[1,0]:Lab Coat:+1 sp. Safety first:0:1;
+[1,1]:Mace:+2 sp. Increases attack strength moderately:0:2;
+[1,2]:Bone Key:Can be used to unlock a chest:0:0;
+[2,0]:Ancient Book:+3 sp. Knowledge is power:0:3;
+[2,1]:Golden Chest:Can be unlocked with the Bone Key:0:0;
+[2,2]:Armor of the Flame:+5 hp. Increases defense and provides fire resistance:5:0;
+[3,0]:Shadow Blade:+3 sp. A weapon forged in the shadows, it enhances attack power with dark energy:0:3;
+[3,1]:Ebony Shield:+5 hp. A rare, dark shield made from ebony, known for its durability and ability to protect the wearer:5:0;
+[3,2]:Dungeon Lord's Crown:Symbol of the Dungeon Lord's authority and power. Grants a powerful bonus when worn:10:5;
 
