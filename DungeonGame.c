@@ -12,59 +12,37 @@ Room rooms[ROOMS_ROWS][ROOMS_COLS];
 Creature creatures[CREATURES_ROWS][CREATURES_COLS];
 Room currentRoom;
 
-
 void loadDefaultGame(const char *fileName) {
     FILE *file = fopen(fileName, "r");
-    if (!file) {
-        perror("Could not open default game data file");
-        return;
-    }
+    if (!file) return;
 
     char line[256];
     int currentRoomSet = 0;
+    int row, col;  
+    char roomName[100], roomInfo[100], itemName[100], itemInfo[100];  
 
     while (fgets(line, sizeof(line), file)) {
-        if (strncmp(line, "#Rooms", 6) == 0) {
-            continue;
-        } else if (strncmp(line, "#Creatures", 10) == 0) {
-            continue;
-        } else if (strncmp(line, "#Items", 6) == 0) {
-            continue;
-        }
+        if (strncmp(line, "#Rooms", 6) == 0) continue;
+        else if (strncmp(line, "#Creatures", 10) == 0) continue;
+        else if (strncmp(line, "#Items", 6) == 0) continue;
 
-        if (strncmp(line, "[", 1) == 0 && strstr(line, "-")) {
-            int row, col;
-            sscanf(line, "[%d,%d]", &row, &col);
-            fgets(line, sizeof(line), file);
+        if (sscanf(line, "[%d,%d]-%[^-]-%[^-]-%[^-]-%[^-]", &row, &col, roomName, roomInfo, itemName, itemInfo) == 6) {
+            strcpy(rooms[row][col].name, roomName);
+            strcpy(rooms[row][col].info, roomInfo);
+            strcpy(rooms[row][col].item.name, itemName);
+            strcpy(rooms[row][col].item.info, itemInfo);
 
             if (!currentRoomSet) {
                 currentRow = row;
                 currentCol = col;
                 currentRoomSet = 1;
             }
-        } else if (strchr(line, ':') != NULL) {
-            if (strstr(line, "Creature:")) {
-                char creatureName[50];
-                int health, strength;
-                sscanf(line, "Creature: %s %d:%d", creatureName, &health, &strength);
-                strcpy(rooms[currentRow][currentCol].creature.name, creatureName);
-                rooms[currentRow][currentCol].creature.health = health;
-                rooms[currentRow][currentCol].creature.strength = strength;
-            } else if (strstr(line, ":")) {
-                char itemName[50], itemDescription[100];
-                int healthBonus, strengthBonus;
-                sscanf(line, "%[^:]:%[^:]:%d:%d", itemName, itemDescription, &healthBonus, &strengthBonus);
-                strcpy(rooms[currentRow][currentCol].items[0].name, itemName);
-                strcpy(rooms[currentRow][currentCol].items[0].info, itemDescription);
-                rooms[currentRow][currentCol].items[0].healthBonus = healthBonus;
-                rooms[currentRow][currentCol].items[0].strengthBonus = strengthBonus;
-            }
         }
     }
-
     fclose(file);
     printf("Default game loaded from %s\n", fileName);
 }
+
 
 void printDungeonData() {
     printf("=== Dungeon Map ===\n");
@@ -92,8 +70,7 @@ void printDungeonData() {
 }
 
 //In-Game Commands
-
-void move(const char *direction) {
+int move(const char *direction) {
     if (strcmp(direction, "up") == 0 && currentRow > 0) {
         currentRow--;
     } else if (strcmp(direction, "down") == 0 && currentRow < ROOMS_ROWS - 1) {
@@ -103,23 +80,34 @@ void move(const char *direction) {
     } else if (strcmp(direction, "left") == 0 && currentCol > 0) {
         currentCol--;
     } else {
-        printf("Invalid move.\n");
+        printf("You can't move further in this direction. Try again.\n");
+        return -1; 
     }
+    printf("You moved to [%d,%d]\n", currentRow, currentCol);
+    return 0; 
 }
 
+
 void look() {
-    printf("You are in %s. %s\n", rooms[currentRow][currentCol].name, rooms[currentRow][currentCol].info);
+    printf("You are in %s. %s\n", 
+        rooms[currentRow][currentCol].name, 
+        rooms[currentRow][currentCol].info);
 
     if (strcmp(rooms[currentRow][currentCol].creature.name, "NULL") != 0) {
-        printf("The Creature in this room is %s. %s\n", rooms[currentRow][currentCol].creature.name,
-               rooms[currentRow][currentCol].creature.info);
-        printf("HP: %d\nSP: %d\n", rooms[currentRow][currentCol].creature.health, rooms[currentRow][currentCol].creature.strength);
+        printf("The Creature in this room is %s. %s\n", 
+            rooms[currentRow][currentCol].creature.name, 
+            rooms[currentRow][currentCol].creature.info);
+        printf("HP: %d\nSP: %d\n", 
+            rooms[currentRow][currentCol].creature.health, 
+            rooms[currentRow][currentCol].creature.strength);
     }
 
     if (rooms[currentRow][currentCol].items[0].name[0] != '\0') {
         printf("Items in this room:\n");
         for (int i = 0; i < 10 && rooms[currentRow][currentCol].items[i].name[0] != '\0'; i++) {
-            printf("  - %s (%s)\n", rooms[currentRow][currentCol].items[i].name, rooms[currentRow][currentCol].items[i].info);
+            printf("  - %s (%s)\n", 
+                rooms[currentRow][currentCol].items[i].name, 
+                rooms[currentRow][currentCol].items[i].info);
         }
     }
 }
@@ -144,8 +132,8 @@ void pickup(const char *itemName) {
             for (int j = 0; j < 10; j++) {
                 if (player.inventory[j] == NULL) {
                     player.inventory[j] = strdup(rooms[currentRow][currentCol].items[i].name);
-                    player.health += rooms[currentRow][currentCol].items[i].healthBonus;  // Apply health bonus
-                    player.strength += rooms[currentRow][currentCol].items[i].strengthBonus;  // Apply strength bonus
+                    player.health += rooms[currentRow][currentCol].items[i].healthBonus;  
+                    player.strength += rooms[currentRow][currentCol].items[i].strengthBonus;  
                     printf("You have picked up: %s\n", itemName);
                     rooms[currentRow][currentCol].items[i].name[0] = '\0'; 
                     return;
@@ -193,7 +181,7 @@ void attack() {
 
 //Menu Commands
 
-void listSavedGames() {
+void list() {
     DIR *dir = opendir("Savegames");
     if (!dir) {
         perror("Could not open Savegames directory");
@@ -217,9 +205,6 @@ void listSavedGames() {
 
     closedir(dir);
 }
-
-#include <sys/stat.h>
-#include <sys/types.h>
 
 void save(const char *filepath) {
     struct stat st = {0};
@@ -324,19 +309,104 @@ void load(const char *filepath) {
     }
 }
 
-
 void exitGame() {
     printf("Exiting the game...\n");
     exit(0);
 }
 
+int fileExists(const char *filename) {
+    FILE *file = fopen(filename, "r"); 
+    if (file) {
+        fclose(file); 
+        return 1; 
+    }
+    return 0; 
+}
+
+void menu() {
+    printf("Welcome to Dungeon");
+    int choice = 0;
+    char saveFileName[50]; 
+
+    while (choice != 5) {
+        printf("\n1-New Game\n2-Load Game\n3-Save Game\n4-List Saved Games\n5-Exit\n");
+        
+        scanf("%d", &choice);  
+
+        switch (choice) {
+        case 1:
+            printf("Loading...\n");
+            loadDefaultGame("DungeonGameData.txt");
+            inGame();
+            break;
+        case 2:
+            list();
+            printf("Choose your save file: ");
+            scanf("%s", saveFileName);  
+
+            char fullPath[100] = "Savegames/";
+            strcat(fullPath, saveFileName); 
+
+            if (fileExists(fullPath)) {
+                load(fullPath);
+            } else {
+                printf("Error loading file\n");
+            }
+            break;
+        case 3:
+            printf("Enter your saved file name: ");
+            scanf("%s", saveFileName); 
+            save(saveFileName);
+            break;
+        case 4:
+            printf("Here is your list of saved games:\n");
+            list();
+            break;
+        case 5:
+            printf("Exiting\n");
+            break;
+        default:
+            printf("Invalid choice. Try again.\n");
+            break;
+        }
+    }
+}
+
+void inGame() {
+    printf("Welcome to the Dungeon. If you want to win, find the Lord and destroy him.\n");
+    
+    int choice = 0;
+    while (choice != 5) {
+        printf("\n1-Move\n2-Look\n3-Inventory\n");
+
+        scanf("%d", &choice);
+
+        switch (choice) {
+        case 1:
+            {
+                int isError = -1;
+                while (isError != 0) {
+                    printf("Which direction do you want to go? (up/down/left/right) ");
+                    char direction[50];
+                    scanf("%s", direction);
+                    isError = move(direction);
+                }
+            }
+            break;
+        case 2:
+            look();
+            break;
+        case 3:
+            inventory();
+            break;
+        default:
+            printf("Invalid choice. Try again.\n");
+            break;
+        }
+    }
+}
 
 int main() {
-    //readRoomData("DungeonGameData.txt");
-    //printDungeonData();
-    
-    save("DungeonGameSavegames.txt");
-    load("DungeonGameSavegames.txt");
-
+    menu();
     return 0;
 }
