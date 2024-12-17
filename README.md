@@ -28,7 +28,7 @@ Save/Load Progress: Save your progress using saveGame() and load a previously sa
 ### Steps
 Clone this repository:
 ```bash
-git clone https://github.com/mehmetgokgul/dungeon-game.git
+git clone https://github.com/mehmetgokgul/Dungeon-Game.git
 ```
 Navigate to the project directory:
 ```
